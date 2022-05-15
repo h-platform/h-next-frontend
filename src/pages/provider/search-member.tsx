@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Card } from '../../components/Card';
 import { EnsureAuthorized } from '../../components/EnsureAuthorized';
 import { command, query } from '../../services/cq.service';
-import { ClientContractMember } from '../../models/member';
+import { ClientContractMember } from '../../models/client-contract-member.entity';
 
 interface IFormInput {
     memberNo: string;
@@ -111,9 +111,19 @@ const checkAppPage: NextPage = () => {
                             <span className='text-xs text-gray'>{memberInfo?.memberNo}</span>
                         </div>
 
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">TPA Name</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            {memberInfo?.contract?.tpa?.contact.contactNameEn}
+                        </div>
+
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Insuerance Company</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            {memberInfo?.contract?.insurer?.contact.contactNameEn}
+                        </div>
+
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Client Name</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            {memberInfo?.contract?.client?.clientCode}
+                            {memberInfo?.contract?.client?.contact.contactNameEn}
                         </div>
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Full Name</div>

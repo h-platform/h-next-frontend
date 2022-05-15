@@ -6,12 +6,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Card } from '../../components/Card';
 import { EnsureAuthorized } from '../../components/EnsureAuthorized';
 import { command, query } from '../../services/cq.service';
-import { ClientContractMember } from '../../models/member';
+import { ClientContractMember } from '../../models/client-contract-member.entity';
 import { useRouter } from 'next/router';
 
 interface IFormInput {
-    memberNo: string;
-    tpaId: number;
+    doctorName: string;
+    department: string;
 }
 
 const handleError = (err: any) => {
@@ -42,19 +42,21 @@ const checkAppPage: NextPage = () => {
     }, [])
 
     const onSubmit: SubmitHandler<IFormInput> = async (formData) => {
-        setIsLoading(true);
-        setMemberInfo(null);
-
         try {
+            setIsLoading(true);
             setIsError(false);
             setErrorMsg('');
-
+            const { data } = await command('provider-gw', 'claim.create', {
+                memberId: memberInfo?.id,
+                doctorName: formData.doctorName,
+                department: formData.department,
+            });
+            router.push(`/provider/claim-detail?claimId=${data.savedRecord.id}`)
         } catch (err) {
             setIsError(true);
             window.alert(handleError(err));
             console.log('error during fetching data', err);
         } finally {
-            reset({ memberNo: '', tpaId: 0 });
             setIsLoading(false);
             setRefreshNo(refreshNo + 1);
         }
@@ -75,6 +77,17 @@ const checkAppPage: NextPage = () => {
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Member No</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             <span className='text-xs text-gray'>{memberInfo?.memberNo}</span>
+                        </div>
+
+
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">TPA Name</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            {memberInfo?.contract?.tpa?.contact.contactNameEn}
+                        </div>
+
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Insuerance Company</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            {memberInfo?.contract?.insurer?.contact.contactNameEn}
                         </div>
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Client Name</div>
@@ -116,13 +129,13 @@ const checkAppPage: NextPage = () => {
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">{memberInfo?.relation}</div>
 
                         {/* form */}
-                        <form onSubmit={handleSubmit(onSubmit)}  className="py-1 px-3 col-span-12 font-medium">
+                        <form onSubmit={handleSubmit(onSubmit)} className="py-1 px-3 col-span-12 font-medium">
                             {/* visit date\ */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Visit Date:</span>
                                 </label>
-                                <input type="text" value={new Date().toISOString().substring(0,10)} placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
+                                <input type="text" disabled value={new Date().toISOString().substring(0, 10)} placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
                             </div>
 
                             {/* doctor name */}
@@ -130,7 +143,7 @@ const checkAppPage: NextPage = () => {
                                 <label className="label">
                                     <span className="label-text">Doctor Name:</span>
                                 </label>
-                                <input {...register("memberNo", { required: true, pattern: /\d{7,7}/ })} type="text" placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
+                                <input {...register("doctorName", { required: true })} type="text" placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
                             </div>
 
                             {/* doctor name */}
@@ -138,15 +151,7 @@ const checkAppPage: NextPage = () => {
                                 <label className="label">
                                     <span className="label-text">Deprtment:</span>
                                 </label>
-                                <input {...register("memberNo", { required: true, pattern: /\d{7,7}/ })} type="text" placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
-                            </div>
-
-                            {/* doctor name */}
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Diagnostic:</span>
-                                </label>
-                                <input {...register("memberNo", { required: true, pattern: /\d{7,7}/ })} type="text" placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
+                                <input {...register("department", { required: true })} type="text" placeholder="" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
                             </div>
 
                             {isError && <p className="text-red-400">{errorMsg}</p>}
