@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const syncSession = useCallback(
     async () => {
       try {
-        const commandReponse = await command('auth', 'user.syncSession', {});
+        const commandReponse = await command('auth', 'auth.syncSession', {});
         setAuthState({ ...authState, user: commandReponse.data.user, isAuthenticated: true, isLoading: false })
       } catch (err) {
         setAuthState({ ...authState, user: null, isAuthenticated: false, isLoading: false })

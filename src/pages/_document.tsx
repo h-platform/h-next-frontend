@@ -5,7 +5,7 @@ export default function _document() {
     return (
         <Html data-theme="cupcake">
             <Head />
-            <body dir='rtl'>
+            <body dir=''>
                 <Main />
                 <NextScript />
             </body>
