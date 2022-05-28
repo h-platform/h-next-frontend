@@ -6,6 +6,7 @@ export class ClientContractMember {
     fullName: string;
     contactNo: string;
     serviceClass: string;
+    benefit: string;
     jobTitle: string;
     relation: string;
     memberNo: string;

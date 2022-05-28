@@ -19,18 +19,12 @@ const handleError = (err: any) => {
 };
 
 const ClaimDetailPage: NextPage = () => {
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm<IFormInput>();
-    const [refreshNo, setRefreshNo] = useState(0);
-    const [loading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorMsg, setErrorMsg] = useState('');
-    const [tpas, setTpas] = useState<any[]>([]);
     const [claim, setClaim] = useState<Claim | null>(null);
     const router = useRouter();
 
     const loadData = useCallback(
         async () => {
-            const {data: claimData} = await query('provider-gw', 'claim.findById', { id: router.query.claimId });
+            const { data: claimData } = await query('provider-gw', 'claim.findById', { id: router.query.claimId });
             setClaim(claimData.row);
         },
         [router.query.claimId],
@@ -45,17 +39,12 @@ const ClaimDetailPage: NextPage = () => {
             <EnsureAuthorized>
                 <Card>
 
-                    {/* member info */}
-                    <h2 className="block text-lg leading-tight font-medium text-black">Search Member</h2>
+                    {/* claim info */}
+                    <h2 className="block text-lg leading-tight font-medium text-black">Claim Details</h2>
                     <hr className="my-3" />
 
-                    {/* member info */}
+                    {/* claim info */}
                     {claim && <div className="grid grid-cols-12 gap-2">
-                        <div className="py-1 px-3 col-span-12">
-                            <h2 className="block py-2 text-lg leading-tight font-medium text-black">Create Claim:</h2>
-                            <hr className="my-0" />
-                        </div>
-
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Member No</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             <span className='text-xs text-gray'>{claim?.member.id}</span>
@@ -64,7 +53,7 @@ const ClaimDetailPage: NextPage = () => {
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">TPA Name</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            {claim?.tpa?.contact.contactNameEn}
+                            {claim?.member.contract.tpa.contact.contactNameEn}
                         </div>
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Insuerance Company</div>
@@ -74,7 +63,7 @@ const ClaimDetailPage: NextPage = () => {
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Client Name</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            {claim?.client?.contact.contactNameEn}
+                            {claim?.member.contract.client.contact.contactNameEn}
                         </div>
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Full Name</div>
@@ -111,7 +100,7 @@ const ClaimDetailPage: NextPage = () => {
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             <span className='text-xs text-gray'>{claim?.status}</span>
                         </div>
-                        
+
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Department</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             <span className='text-xs text-gray'>{claim?.department}</span>
@@ -127,6 +116,9 @@ const ClaimDetailPage: NextPage = () => {
                     {/* links */}
                     <hr className="my-3" />
                     <div className="text-center">
+                        <Link href={`/api/provider-gw/queries/claim.getReport.pdf?id=${claim.id}&authorization=${window.localStorage.getItem('token')}`}>
+                            <button className='btn btn-primary btn-xs'>Print Claim</button>
+                        </Link>
                         <Link href='/'>
                             <a className="w-full btn btn-primary btn-sm bg-gray-500">
                                 Home Page

@@ -12,4 +12,5 @@ export class ClientContract {
     refNo: String;
     startDate: Date;
     endDate: Date;
+    acceptedByTpa: boolean;
 }

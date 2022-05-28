@@ -1,5 +1,5 @@
-import { Contact } from 'src/contacts/entities/contact.entity';
-import { User } from '../../user/entities/user.entity';
+import { Contact } from './contact.entity';
+import { User } from './user.entity';
 
 export class Provider {
     id: number;

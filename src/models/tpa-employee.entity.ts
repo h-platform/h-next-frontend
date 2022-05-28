@@ -1,5 +1,4 @@
 import { User } from './user.entity';
-import { Provider } from './provider.entity';
 import { TPA } from './tpa.entity';
 
 export class TPAEmployee {

@@ -73,7 +73,7 @@ const checkAppPage: NextPage = () => {
                             <label className="label">
                                 <span className="label-text">Member No:</span>
                             </label>
-                            <input {...register("memberNo", { required: true, pattern: /\d{7,7}/ })} type="number" placeholder="0000125" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
+                            <input {...register("memberNo", { required: true, pattern: /\d{1,12}/ })} type="number" placeholder="0000125" className={`input input-sm input input-bordered ${isError && "border-red-400"}`} />
                             {errors.memberNo && errors.memberNo?.type == "required" && <p className="text-red-400 text-justify">This field is required</p>}
                             {errors.memberNo && errors.memberNo?.type == "pattern" && <p className="text-red-400 text-justify">Member No must be 7 digits</p>}
                         </div>
@@ -84,6 +84,7 @@ const checkAppPage: NextPage = () => {
                                 <span className="label-text">TPA:</span>
                             </label>
                             <select {...register("tpaId", { required: true })} className={`input input-sm input input-bordered ${isError && "border-red-400"}`}>
+                                <option value=""></option>
                                 {tpas.map((tpa) => <option value={tpa.id}>{tpa.tpaCode}</option>)}
                             </select>
                             {errors.tpaId && errors.tpaId?.type == "required" && <p className="text-red-400 text-justify">This field is required</p>}
