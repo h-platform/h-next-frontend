@@ -24,20 +24,30 @@ const Home: NextPage = () => {
                 Search Member
               </a>
             </Link>
+            <Link href='/provider/employees'>
+              <a className='w-full btn btn-primary btn-sm'>
+                Employees
+              </a>
+            </Link>
           </div>
         </div>}
 
         {auth.isAuthenticated && (auth.user.roles||[]).includes('TPA') && <div>
           <span className='text-xs text-gray-500'>TPA:</span>
           <div className='flex flex-col gap-2'>
-            <Link href='/tpa/providers-contracts-list'>
+            <Link href='/tpa/providers-contracts'>
               <a className='w-full btn btn-primary btn-sm'>
-                Providers Contracts List
+                Providers Contracts
               </a>
             </Link>
-            <Link href='/tpa/clients-contracts-list'>
+            <Link href='/tpa/clients-contracts'>
               <a className='w-full btn btn-primary btn-sm'>
-                Clients Contracts List
+                Clients Contracts
+              </a>
+            </Link>
+            <Link href='/tpa/employees'>
+              <a className='w-full btn btn-primary btn-sm'>
+                Employees
               </a>
             </Link>
             {/* <Link href='/provider/search-member'>
