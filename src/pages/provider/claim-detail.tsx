@@ -8,6 +8,7 @@ import { EnsureAuthorized } from '../../components/EnsureAuthorized';
 import { command, query } from '../../services/cq.service';
 import { useRouter } from 'next/router';
 import { Claim } from '../../models/claim.entity';
+import { formatDate } from '../../common/util';
 
 interface IFormInput {
     memberNo: string;
@@ -45,25 +46,30 @@ const ClaimDetailPage: NextPage = () => {
 
                     {/* claim info */}
                     {claim && <div className="grid grid-cols-12 gap-2">
+                        
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Claim Id</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            <span className='text-xs text-gray'>{claim?.id}</span>
+                        </div>
+
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Member No</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             <span className='text-xs text-gray'>{claim?.member.id}</span>
                         </div>
-
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">TPA Name</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             {claim?.member.contract.tpa.contact.contactNameEn}
                         </div>
 
-                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Insuerance Company</div>
-                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            {claim?.member?.contract?.insurer?.contact.contactNameEn}
-                        </div>
-
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Client Name</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
                             {claim?.member.contract.client.contact.contactNameEn}
+                        </div>
+
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Insuerance Company</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            {claim?.member?.contract?.insurer?.contact.contactNameEn}
                         </div>
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Full Name</div>
@@ -76,24 +82,9 @@ const ClaimDetailPage: NextPage = () => {
                             {claim?.member.serviceClass}
                         </div>
 
-                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Gender</div>
-                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            <span className='text-xs text-gray'>{claim?.member.gender}</span>
-                        </div>
-
-                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">DOB</div>
-                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            <span className='text-xs text-gray'>{claim?.member.birthDate}</span>
-                        </div>
-
-                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">id</div>
-                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            <span className='text-xs text-gray'>{claim?.id}</span>
-                        </div>
-
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Visit Date</div>
                         <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
-                            <span className='text-xs text-gray'>{claim?.visitDate}</span>
+                            <span className='text-xs text-gray'>{formatDate(String(claim?.visitDate))}</span>
                         </div>
 
                         <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Claim Status</div>
@@ -111,14 +102,22 @@ const ClaimDetailPage: NextPage = () => {
                             <span className='text-xs text-gray'>{claim?.doctorName}</span>
                         </div>
 
+                        <div className="bg-gray-300 py-1 px-3 col-span-12 md:col-span-6 font-medium">Created By</div>
+                        <div className="bg-gray-100 py-1 px-3 col-span-12 md:col-span-6">
+                            <span className='text-xs text-gray'>{claim?.createdBy.displayName}</span>
+                        </div>
+
+                        <div className="col-span-12">
+                            <Link href={`/api/provider-gw/queries/claim.getReport.pdf?id=${claim.id}&authorization=${window.localStorage.getItem('token')}`}>
+                                <button className='w-full btn btn-primary btn-xs'>Print Claim</button>
+                            </Link>
+                        </div>
+
                     </div>}
 
                     {/* links */}
                     <hr className="my-3" />
                     <div className="text-center">
-                        <Link href={`/api/provider-gw/queries/claim.getReport.pdf?id=${claim.id}&authorization=${window.localStorage.getItem('token')}`}>
-                            <button className='btn btn-primary btn-xs'>Print Claim</button>
-                        </Link>
                         <Link href='/'>
                             <a className="w-full btn btn-primary btn-sm bg-gray-500">
                                 Home Page
