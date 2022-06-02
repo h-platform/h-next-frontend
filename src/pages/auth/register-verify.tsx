@@ -35,10 +35,9 @@ export default function register() {
 
     return (
         <Card>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className='flex flex-col gap-1' onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="card-title text-center">رمز التحقق</h2>
-                <hr className="my-3" />
-
+                <hr />
 
                 {/* mobile number field */}
                 <div className="form-control">
@@ -61,19 +60,15 @@ export default function register() {
                 </div>
 
                 {/* verify button */}
-                <div className="mt-2">
-                    <button type="submit" className="w-full btn btn-primary btn-sm">ارسال</button>
-                </div>
+                <button type="submit" className="w-full btn btn-primary btn-sm">ارسال</button>
 
                 {/* home link */}
-                <hr className="my-3" />
-                <div className='text-center'>
-                    <Link href='/'>
-                        <a className="link link-primary">
-                            صفحة البداية
-                        </a>
-                    </Link>
-                </div>
+                <hr />
+                <Link href='/'>
+                    <a className="btn btn-xs bg-gray-500">
+                        صفحة البداية
+                    </a>
+                </Link>
             </form>
         </Card>
     )

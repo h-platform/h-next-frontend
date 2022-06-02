@@ -43,7 +43,7 @@ export default function register() {
         } catch (err) {
             console.log('some error occured during registration', err)
             window.alert(handleError(err));
-            setRefreshNo(refreshNo+1);
+            setRefreshNo(refreshNo + 1);
         } finally {
             setIsLoading(false);
         }
@@ -52,9 +52,9 @@ export default function register() {
     return (
         <Card>
             {/* form */}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className="flex flex-col gap-1" onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="card-title text-center">تسجيل حساب</h2>
-                <hr className="my-3" />
+                <hr />
 
                 {/* name field */}
                 <div className="form-control">
@@ -102,7 +102,7 @@ export default function register() {
                 {/* captcha number */}
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">رمز التحقق <a className="link" href='' onClick={(e) => {e.preventDefault(); setRefreshNo(refreshNo+1)}}>(تحديث)</a>:</span>
+                        <span className="label-text">رمز التحقق <a className="link" href='' onClick={(e) => { e.preventDefault(); setRefreshNo(refreshNo + 1) }}>(تحديث)</a>:</span>
                     </label>
                     <img className="w-44" src={`${BASE_URL}/captcha/commands/user.createCaptcha?resource=user-register&refreshNo=${refreshNo}`} />
                     <input {...register("captcha", { required: true })} type="text" placeholder="" className="input input-sm input-bordered" />
@@ -111,37 +111,25 @@ export default function register() {
                 </div>
 
 
-                {/* signup button */}
-                <div className="mt-2">
-                    <button type="submit" className="w-full btn btn-primary btn-sm">ارسال</button>
-                </div>
+                {/* actions */}
+                <button type="submit" className="btn btn-primary btn-xs">ارسال</button>
+                <hr />
+                <Link href='/auth/login'>
+                    <a className="btn btn-xs bg-gray-500">
+                        تسجيل الدخول
+                    </a>
+                </Link>
+                <Link href='/auth/reset-password'>
+                    <a className="btn btn-xs bg-gray-500">
+                        إعادة ضبط كلمة المرور
+                    </a>
+                </Link>
+                <Link href='/'>
+                    <a className="btn btn-xs bg-gray-500">
+                        صفحة البداية
+                    </a>
+                </Link>
             </form>
-
-            {/* links */}
-            <div className='text-center'>
-                <hr className="my-3" />
-                <div className="mt-2">
-                    <Link href='/auth/login'>
-                        <a className="link link-primary">
-                            تسجيل الدخول
-                        </a>
-                    </Link>
-                </div>
-                <div className="mt-2">
-                    <Link href='/auth/reset-password'>
-                        <a className="link link-primary">
-                            إعادة ضبط كلمة المرور
-                        </a>
-                    </Link>
-                </div>
-                <div className="mt-2">
-                    <Link href='/'>
-                        <a className="link link-primary">
-                            صفحة البداية
-                        </a>
-                    </Link>
-                </div>
-            </div>
         </Card>
     )
 }

@@ -43,9 +43,9 @@ export default function Login() {
 
     return (
         <Card>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
                 <h2 className="card-title text-center">تسجيل الدخول</h2>
-                <hr className="my-3" />
+                <hr className="" />
 
                 {/* mobile */}
                 <div className="form-control">
@@ -66,38 +66,27 @@ export default function Login() {
                     {errors.password && errors.password?.type == "pattern" && <p className="text-red-400 text-justify">هذا الحقل لابد ان يكون من 12 خانة</p>}
                 </div>
 
-                {/* login action */}
-                <div className="my-3">
+                {/* actions */}
+                <div className="">
                     <button className="w-full btn btn-primary btn-sm">تسجيل الدخول</button>
                 </div>
+                <hr className="" />
+                <Link href='/auth/register' >
+                    <a className="btn btn-primary btn-xs bg-gray-400">
+                        تسجيل حساب جديد
+                    </a>
+                </Link>
+                <Link href='/auth/reset-password'>
+                    <a className="btn btn-primary btn-xs bg-gray-400">
+                        إعادة ضبط كلمة المرور
+                    </a>
+                </Link>
+                <Link href='/'>
+                    <a className="btn btn-primary btn-xs bg-gray-400">
+                        صفحة البداية
+                    </a>
+                </Link>
             </form>
-
-            <hr className="my-3" />
-
-            {/* link */}
-            <div className='text-center'>
-                <div className="mt-2">
-                    <Link href='/auth/register' >
-                        <a className="link link-primary">
-                            تسجيل حساب جديد
-                        </a>
-                    </Link>
-                </div>
-                <div className="mt-2">
-                    <Link href='/auth/reset-password'>
-                        <a className="link link-primary">
-                            إعادة ضبط كلمة المرور
-                        </a>
-                    </Link>
-                </div>
-                <div className="mt-2">
-                    <Link href='/'>
-                        <a className="link link-primary">
-                            صفحة البداية
-                        </a>
-                    </Link>
-                </div>
-            </div>
         </Card>
     )
 }

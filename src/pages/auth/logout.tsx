@@ -32,19 +32,21 @@ export default function Logout() {
 
     return (
         <Card>
-            <h2 className="card-title">تسجيل الخروج</h2>
-            <hr className="my-3" />
+            <div className='flex flex-col gap-2'>
+
+                <h2 className="card-title">تسجيل الخروج</h2>
+                <hr />
+            </div>
 
             <p>تم تسجيل الخروج بنجاح</p>
 
-            <div className="textCenter">
-                {/* links */}
-                <hr className="my-3" />
-                <div>
-                    <span className="link link-primary">
-                        <Link href='/'>صفحة البداية</Link>
-                    </span>
-                </div>
+            <hr />
+            <div>
+                <Link href='/'>
+                    <a className="btn btn-xs bg-gray-500">
+                        صفحة البداية
+                    </a>
+                </Link>
             </div>
         </Card>
     )

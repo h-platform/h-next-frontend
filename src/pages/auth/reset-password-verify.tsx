@@ -37,10 +37,10 @@ export default function register() {
 
     return (
         <Card>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className='flex flex-col gap-1' onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="card-title text-center">رمز التحقق</h2>
 
-                <hr className="my-3" />
+                <hr />
 
                 {/* mobile number field */}
                 <div className="form-control">
@@ -61,7 +61,6 @@ export default function register() {
                     {errors.token && errors.token.type == 'minLength' && <p className="text-red-400 text-justify">رمز التحقق من 6 ارقام</p>}
                     {errors.token && errors.token.type == 'maxLength' && <p className="text-red-400 text-justify">رمز التحقق من 6 ارقام</p>}
                 </div>
-
 
                 {/* password */}
                 <div className="form-control mt-2">
@@ -85,24 +84,16 @@ export default function register() {
                     {errors.password2 && errors.password2.type === 'minLength' && <p className="text-red-400 text-justify">كلمة المرور لابد من ان تتكون من 8 خانات</p>}
                 </div>
 
-                {/* verify button */}
-                <hr className="my-3" />
-                <div className="mt-2">
-                    <button type="submit" className="w-full btn btn-primary btn-sm">ارسال</button>
-                </div>
+                <hr />
+                <button type="submit" className="w-full btn btn-primary btn-xs">ارسال</button>
 
+                <hr />
+                <Link href='/'>
+                    <a className="btn btn-xs bg-gray-500">
+                        صفحة البداية
+                    </a>
+                </Link>
             </form>
-            <div>
-                {/* home link */}
-                <hr className="my-3" />
-                <div className='text-center'>
-                    <Link href='/'>
-                        <a className="link link-primary">
-                            صفحة البداية
-                        </a>
-                    </Link>
-                </div>
-            </div>
         </Card>
     )
 }

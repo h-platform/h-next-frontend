@@ -39,12 +39,11 @@ export default function signup() {
 
     return (
         <Card>
-            {/* form */}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form className='flex flex-col gap-1' onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="card-title text-center">إعادة ضبط كلمة المرور</h2>
 
                 {/* mobile */}
-                <hr className="my-3" />
+                <hr />
                 <div className="form-control">
                     <label className="label">
                         <span className="label-text">رقم الموبايل:</span>
@@ -78,37 +77,24 @@ export default function signup() {
                 </div>
 
                 {/* login action */}
-                <div className="mt-2">
-                    <button className="w-full btn btn-primary btn-sm">إعادة الضبط</button>
-                </div>
+                <button className="btn btn-primary btn-xs">إعادة الضبط</button>
+                <hr />
+                <Link href='/auth/register'>
+                    <a className="btn btn-xs bg-gray-500">
+                        تسجيل حساب
+                    </a>
+                </Link>
+                <Link href='/auth/login'>
+                    <a className="btn btn-xs bg-gray-500">
+                        تسجيل الدخول
+                    </a>
+                </Link>
+                <Link href='/'>
+                    <a className="btn btn-xs bg-gray-500">
+                        صفحة البداية
+                    </a>
+                </Link>
             </form>
-
-            {/* links */}
-            <div className='text-center'>
-                {/* links */}
-                <hr className="my-3" />
-                <div className="mt-2">
-                    <Link href='/auth/register'>
-                        <a className="link link-primary">
-                            تسجيل حساب
-                        </a>
-                    </Link>
-                </div>
-                <div className="mt-2">
-                    <Link href='/auth/login'>
-                        <a className="link link-primary">
-                            تسجيل الدخول
-                        </a>
-                    </Link>
-                </div>
-                <div className="mt-2">
-                    <Link href='/'>
-                        <a className="link link-primary">
-                            صفحة البداية
-                        </a>
-                    </Link>
-                </div>
-            </div>
         </Card>
     )
 }
